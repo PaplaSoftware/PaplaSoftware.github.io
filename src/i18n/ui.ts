@@ -26,7 +26,7 @@ export const company = {
 // A static site has no backend. Paste a Formspree endpoint
 // (https://formspree.io, free tier) to enable real submissions;
 // otherwise the form falls back to a `mailto:` link.
-export const FORMSPREE_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxx'
+export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqrover';
 
 // Section anchors are locale-independent and shared across languages.
 export const anchors = {

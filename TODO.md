@@ -18,9 +18,9 @@ the project is structured.
 
 ## P0 — Immediate
 
-- [ ] **Working contact form.** Sign up for Formspree (or Web3Forms), set
-      `FORMSPREE_ENDPOINT` in `src/i18n/ui.ts`. Currently falls back to `mailto:`
-      (opens mail client, does not actually send). — STATIC-OK
+- [x] **Working contact form.** Formspree endpoint wired in `src/i18n/ui.ts`
+      (`https://formspree.io/f/xaqrover` → paplasoftware@gmail.com) + honeypot + subject.
+      NOTE: do one real submit after deploy to activate the form (free plan). — STATIC-OK
 - [ ] **Custom domain** `paplasoftware.pl` (DNS + `CNAME` in `public/`, enable HTTPS
       in Pages settings). More professional than `*.github.io`. — STATIC-OK
 - [ ] **Basic SEO:** Open Graph / Twitter meta + share image, `sitemap`, `robots.txt`,

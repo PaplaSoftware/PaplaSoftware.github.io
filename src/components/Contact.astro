@@ -85,6 +85,16 @@ const formMethod = FORMSPREE_ENDPOINT ? "POST" : "GET";
 
       <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8 light:border-slate-200 light:bg-white">
         <form action={formAction} method={formMethod} class="space-y-5">
+          {/* Formspree: email subject + honeypot spam trap (bots fill it, humans don't) */}
+          <input type="hidden" name="_subject" value="Nowa wiadomość z paplasoftware.github.io" />
+          <input
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            class="hidden"
+          />
           <div>
             <label for="name" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
               {t.contact.formName}
