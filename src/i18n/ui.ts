@@ -11,7 +11,6 @@ export const defaultLang: Lang = 'pl';
 export type Lang = keyof typeof languages;
 
 // Language-neutral company / registration data — single source of truth.
-// TODO: replace `email` / `phone` placeholders with real contact details.
 export const company = {
   name: 'Przemysław Papla - Software',
   short: 'Papla Software',
@@ -19,9 +18,9 @@ export const company = {
   city: '43-370 Szczyrk',
   nip: '9372761119',
   regon: '528464558',
-  email: 'kontakt@paplasoftware.pl',
-  phone: '+48 000 000 000',
-  phoneHref: '+48000000000',
+  email: 'paplasoftware@gmail.com',
+  phone: '+48 17 779 62 27',
+  phoneHref: '+48177796227',
 } as const;
 
 // A static site has no backend. Paste a Formspree endpoint
@@ -38,10 +37,13 @@ export const anchors = {
 } as const;
 
 const pl = {
+  a11y: {
+    themeToggle: 'Przełącz motyw jasny / ciemny',
+  },
   meta: {
     title: `${company.name} — technologia i niezawodność dla biznesu`,
     description:
-      'Przemysław Papla - Software: dedykowane oprogramowanie i audyty kodu (B2B), usługi lokalne w Szczyrku i okolicach oraz wypożyczalnia sprzętu.',
+      'Przemysław Papla - Software: dedykowane oprogramowanie i audyty kodu (B2B), usługi lokalne w Sędziszowie Małopolskim i okolicach oraz wypożyczalnia sprzętu.',
   },
   nav: {
     services: 'Usługi B2B',
@@ -54,7 +56,7 @@ const pl = {
     badge: 'Software · Usługi lokalne · Produkty własne',
     titleLead: 'Technologia i niezawodność —',
     titleHighlight: 'usługi dla biznesu i klientów indywidualnych',
-    lead: "Dedykowane oprogramowanie i audyty kodu dla firm, praktyczne usługi lokalne w Szczyrku i okolicach oraz własne produkty elektroniczne. Jedna działalność — wiele źródeł wartości.",
+    lead: "Dedykowane oprogramowanie i audyty kodu dla firm, praktyczne usługi lokalne w Sędziszowie Małopolskim i okolicach oraz własne produkty. Jedna działalność — wiele źródeł wartości.",
     ctaPrimary: 'Zobacz zakres usług',
     ctaSecondary: 'Kontakt',
   },
@@ -78,31 +80,47 @@ const pl = {
     ],
   },
   local: {
-    eyebrow: 'Szczyrk i okolice',
+    eyebrow: 'Sędziszów Małopolski i okolice',
     title: 'Usługi lokalne i wypożyczalnia sprzętu',
     lead: 'Praktyczna pomoc na miejscu oraz sprzęt do wynajęcia, gdy potrzebny jest tylko na chwilę.',
     carTitle: 'Awaryjne odpalanie aut',
     carDesc:
-      'Rozładowany akumulator? Pomoc w odpaleniu samochodu na terenie Szczyrku i okolic. Szybki dojazd, bez zbędnych formalności.',
+      'Rozładowany akumulator? Pomoc w odpaleniu samochodu na terenie Sędziszowa Małopolskiego i okolic. Szybki dojazd, bez zbędnych formalności.',
     carCta: 'Zadzwoń po pomoc',
     rentalTitle: 'Wypożyczalnia sprzętu',
     rentalDescHtml:
-      'Sprzęt do wynajęcia, m.in. <span class="text-slate-200">agregat malarski</span> — idealny do jednorazowych remontów bez inwestowania we własne urządzenie. Elastyczne okresy najmu.',
+      'Sprzęt do wynajęcia, m.in. <span class="text-slate-200 light:text-slate-800">agregat malarski</span> — idealny do jednorazowych remontów bez inwestowania we własne urządzenie. Elastyczne okresy najmu.',
     rentalCta: 'Zapytaj o dostępność',
   },
   products: {
     eyebrow: 'Produkty własne',
-    title: 'Elektronika projektowana od podstaw',
-    badge: 'Coming Soon · Wkrótce w sprzedaży',
-    itemTitle: 'Inteligentna lampka drewniana',
-    itemDescHtml:
-      'Autorski produkt łączący naturalne, ręcznie wykończone drewno z nowoczesną elektroniką. Sercem urządzenia jest <span class="text-slate-200">własne PCB</span> sterujące <span class="text-slate-200">adresowalnym oświetleniem LED RGB</span>.',
-    features: [
-      'Autorski projekt PCB i firmware',
-      'Pełna paleta kolorów LED RGB i płynne sceny świetlne',
-      'Naturalne drewno, ręczne wykończenie każdego egzemplarza',
+    title: 'Produkty projektowane od podstaw',
+    items: [
+      {
+        title: 'Inteligentna lampka drewniana',
+        badge: 'Coming Soon · Wkrótce w sprzedaży',
+        descHtml:
+          'Autorski produkt łączący naturalne, ręcznie wykończone drewno z nowoczesną elektroniką. Sercem urządzenia jest <span class="text-slate-200 light:text-slate-800">własne PCB</span> sterujące <span class="text-slate-200 light:text-slate-800">adresowalnym oświetleniem LED RGB</span>.',
+        features: [
+          'Autorski projekt PCB i firmware',
+          'Pełna paleta kolorów LED RGB i płynne sceny świetlne',
+          'Naturalne drewno, ręczne wykończenie każdego egzemplarza',
+        ],
+        cta: 'Powiadom mnie o premierze',
+      },
+      {
+        title: 'Planer 3D ogrodu',
+        badge: 'Coming Soon · Wkrótce',
+        descHtml:
+          'Aplikacja webowa do projektowania ogrodu w <span class="text-slate-200 light:text-slate-800">3D</span> — rozmieszczaj rośliny, strefy i elementy małej architektury i zobacz efekt, zanim chwycisz za łopatę.',
+        features: [
+          'Projektowanie w przeglądarce, bez instalacji',
+          'Interaktywna wizualizacja 3D układu ogrodu',
+          'Biblioteka roślin i elementów małej architektury',
+        ],
+        cta: 'Powiadom mnie o premierze',
+      },
     ],
-    cta: 'Zapisz się na informację o premierze',
   },
   contact: {
     eyebrow: 'Kontakt',
@@ -125,9 +143,10 @@ const pl = {
     topics: [
       'Usługi software / B2B',
       'Audyt kodu',
-      'Usługa lokalna (Szczyrk i okolice)',
+      'Usługa lokalna (Sędziszów Małopolski i okolice)',
       'Wypożyczalnia sprzętu',
       'Inteligentna lampka drewniana',
+      'Planer 3D ogrodu',
       'Inne',
     ],
     submit: 'Wyślij wiadomość',
@@ -142,10 +161,13 @@ const pl = {
 };
 
 const en: typeof pl = {
+  a11y: {
+    themeToggle: 'Toggle light / dark theme',
+  },
   meta: {
     title: `${company.name} — technology and reliability for business`,
     description:
-      'Przemysław Papla - Software: custom software development and code audits (B2B), local services in Szczyrk and the surrounding area, and equipment rental.',
+      'Przemysław Papla - Software: custom software development and code audits (B2B), local services in Sędziszów Małopolski and the surrounding area, and equipment rental.',
   },
   nav: {
     services: 'B2B services',
@@ -158,7 +180,7 @@ const en: typeof pl = {
     badge: 'Software · Local services · Own products',
     titleLead: 'Technology and reliability —',
     titleHighlight: 'services for business and individual clients',
-    lead: 'Custom software and code audits for companies, hands-on local services in Szczyrk and the surrounding area, and my own electronic products. One business — many sources of value.',
+    lead: 'Custom software and code audits for companies, hands-on local services in Sędziszów Małopolski and the surrounding area, and my own products. One business — many sources of value.',
     ctaPrimary: 'See what I offer',
     ctaSecondary: 'Contact',
   },
@@ -182,31 +204,47 @@ const en: typeof pl = {
     ],
   },
   local: {
-    eyebrow: 'Szczyrk and surroundings',
+    eyebrow: 'Sędziszów Małopolski and surroundings',
     title: 'Local services and equipment rental',
     lead: 'Practical help on site and equipment to rent when you only need it for a while.',
     carTitle: 'Emergency car jump-start',
     carDesc:
-      'Flat battery? Help starting your car in Szczyrk and the surrounding area. Fast arrival, no unnecessary paperwork.',
+      'Flat battery? Help starting your car in Sędziszów Małopolski and the surrounding area. Fast arrival, no unnecessary paperwork.',
     carCta: 'Call for help',
     rentalTitle: 'Equipment rental',
     rentalDescHtml:
-      'Equipment to rent, e.g. a <span class="text-slate-200">paint sprayer</span> — ideal for one-off renovations without buying your own unit. Flexible rental periods.',
+      'Equipment to rent, e.g. a <span class="text-slate-200 light:text-slate-800">paint sprayer</span> — ideal for one-off renovations without buying your own unit. Flexible rental periods.',
     rentalCta: 'Ask about availability',
   },
   products: {
     eyebrow: 'Own products',
-    title: 'Electronics designed from scratch',
-    badge: 'Coming Soon',
-    itemTitle: 'Smart wooden lamp',
-    itemDescHtml:
-      'An original product combining natural, hand-finished wood with modern electronics. At its heart is a <span class="text-slate-200">custom PCB</span> driving <span class="text-slate-200">addressable RGB LED lighting</span>.',
-    features: [
-      'Original PCB and firmware design',
-      'Full RGB LED color palette and smooth lighting scenes',
-      'Natural wood, each unit hand-finished',
+    title: 'Products designed from scratch',
+    items: [
+      {
+        title: 'Smart wooden lamp',
+        badge: 'Coming Soon',
+        descHtml:
+          'An original product combining natural, hand-finished wood with modern electronics. At its heart is a <span class="text-slate-200 light:text-slate-800">custom PCB</span> driving <span class="text-slate-200 light:text-slate-800">addressable RGB LED lighting</span>.',
+        features: [
+          'Original PCB and firmware design',
+          'Full RGB LED color palette and smooth lighting scenes',
+          'Natural wood, each unit hand-finished',
+        ],
+        cta: 'Notify me at launch',
+      },
+      {
+        title: '3D garden planner',
+        badge: 'Coming Soon',
+        descHtml:
+          'A web app for designing your garden in <span class="text-slate-200 light:text-slate-800">3D</span> — arrange plants, zones and landscaping features and see the result before you pick up a spade.',
+        features: [
+          'Design in the browser, no install',
+          'Interactive 3D visualization of the layout',
+          'Library of plants and landscaping elements',
+        ],
+        cta: 'Notify me at launch',
+      },
     ],
-    cta: 'Get notified about the launch',
   },
   contact: {
     eyebrow: 'Contact',
@@ -229,9 +267,10 @@ const en: typeof pl = {
     topics: [
       'Software / B2B services',
       'Code audit',
-      'Local service (Szczyrk area)',
+      'Local service (Sędziszów Małopolski area)',
       'Equipment rental',
       'Smart wooden lamp',
+      '3D garden planner',
       'Other',
     ],
     submit: 'Send message',

@@ -38,6 +38,19 @@ const navItems = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/*
+      Set the theme before first paint to avoid a flash. Dark is the default;
+      a stored choice wins, otherwise we follow the OS preference.
+    */}
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem("theme");
+        const light = stored
+          ? stored === "light"
+          : window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (light) document.documentElement.classList.add("light");
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta name="description" content={t.meta.description} />
     <meta name="theme-color" content="#020617" />
@@ -54,13 +67,13 @@ const navItems = [
     <title>{t.meta.title}</title>
   </head>
 
-  <body class="bg-slate-950 text-slate-300 antialiased selection:bg-emerald-400/20 selection:text-emerald-100">
+  <body class="bg-slate-950 text-slate-300 antialiased selection:bg-emerald-400/20 selection:text-emerald-100 light:bg-white light:text-slate-700">
     <!-- ===================== HEADER ===================== -->
     <header
-      class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur-lg"
+      class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur-lg light:border-slate-200 light:bg-white/80"
     >
       <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#top" class="flex items-center gap-2.5 font-semibold text-white">
+        <a href="#top" class="flex items-center gap-2.5 font-semibold text-white light:text-slate-900">
           <span
             class="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 text-slate-950 shadow-lg shadow-emerald-500/20"
           >
@@ -73,26 +86,28 @@ const navItems = [
           {navItems.map((item) => (
             <a
               href={item.href}
-              class="text-sm font-medium text-slate-400 transition-colors hover:text-white"
+              class="text-sm font-medium text-slate-400 transition-colors hover:text-white light:text-slate-500 light:hover:text-slate-900"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3 sm:gap-4">
           {/* Language switcher */}
           <div class="flex items-center gap-1 text-sm font-medium">
             {(Object.keys(languages) as Lang[]).map((code, i) => (
               <>
-                {i > 0 && <span class="text-slate-700">/</span>}
+                {i > 0 && <span class="text-slate-700 light:text-slate-300">/</span>}
                 <a
                   href={localeUrls[code]}
                   hreflang={code}
                   aria-current={code === lang ? "true" : undefined}
                   class:list={[
                     "uppercase transition-colors",
-                    code === lang ? "text-white" : "text-slate-500 hover:text-white",
+                    code === lang
+                      ? "text-white light:text-slate-900"
+                      : "text-slate-500 hover:text-white light:hover:text-slate-900",
                   ]}
                 >
                   {code}
@@ -101,9 +116,22 @@ const navItems = [
             ))}
           </div>
 
+          {/* Theme toggle */}
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label={t.a11y.themeToggle}
+            class="grid size-9 place-items-center rounded-lg text-slate-400 ring-1 ring-white/10 transition-colors hover:bg-white/5 hover:text-white light:text-slate-500 light:ring-slate-200 light:hover:bg-slate-100 light:hover:text-slate-900"
+          >
+            {/* Sun — shown in dark mode (click switches to light) */}
+            <svg class="size-5 light:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            {/* Moon — shown in light mode (click switches to dark) */}
+            <svg class="hidden size-5 light:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+          </button>
+
           <a
             href={anchors.contact}
-            class="hidden rounded-lg bg-white/5 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/10 transition-all hover:bg-emerald-400 hover:text-slate-950 hover:ring-emerald-400 sm:inline-block"
+            class="hidden rounded-lg bg-white/5 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/10 transition-all hover:bg-emerald-400 hover:text-slate-950 hover:ring-emerald-400 light:bg-slate-900/5 light:text-slate-900 light:ring-slate-900/10 sm:inline-block"
           >
             {t.nav.cta}
           </a>
@@ -125,24 +153,24 @@ const navItems = [
 
         <div class="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
           <span
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-300"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-300 light:border-slate-200 light:bg-slate-100 light:text-slate-600"
           >
             <span class="size-2 rounded-full bg-emerald-400 shadow-[0_0_10px] shadow-emerald-400"></span>
             {t.hero.badge}
           </span>
 
           <h1
-            class="mx-auto mt-8 max-w-4xl text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
+            class="mx-auto mt-8 max-w-4xl text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl light:text-slate-900"
           >
             {t.hero.titleLead}{" "}
             <span
-              class="bg-gradient-to-r from-emerald-300 via-teal-300 to-sky-400 bg-clip-text text-transparent"
+              class="bg-gradient-to-r from-emerald-300 via-teal-300 to-sky-400 bg-clip-text text-transparent light:from-emerald-500 light:via-teal-500 light:to-sky-600"
             >
               {t.hero.titleHighlight}
             </span>
           </h1>
 
-          <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-slate-400">
+          <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-slate-400 light:text-slate-600">
             {t.hero.lead}
           </p>
 
@@ -156,7 +184,7 @@ const navItems = [
             </a>
             <a
               href={anchors.contact}
-              class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 light:border-slate-200 light:bg-slate-100 light:text-slate-900 light:hover:bg-slate-200"
             >
               {t.hero.ctaSecondary}
             </a>
@@ -165,25 +193,25 @@ const navItems = [
       </section>
 
       <!-- ===================== B2B / SOFTWARE SERVICES ===================== -->
-      <section id="services" class="scroll-mt-20 border-t border-white/5 py-20 sm:py-28">
+      <section id="services" class="scroll-mt-20 border-t border-white/5 py-20 sm:py-28 light:border-slate-200">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl">
-            <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+            <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400 light:text-emerald-600">
               {t.services.eyebrow}
             </p>
-            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
               {t.services.title}
             </h2>
-            <p class="mt-4 text-lg text-slate-400">{t.services.lead}</p>
+            <p class="mt-4 text-lg text-slate-400 light:text-slate-600">{t.services.lead}</p>
           </div>
 
           <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {t.services.items.map((item, idx) => (
               <article
-                class="group rounded-2xl border border-white/10 bg-slate-900/50 p-7 transition-colors hover:border-emerald-400/40 hover:bg-slate-900"
+                class="group rounded-2xl border border-white/10 bg-slate-900/50 p-7 transition-colors hover:border-emerald-400/40 hover:bg-slate-900 light:border-slate-200 light:bg-white light:hover:border-emerald-400 light:hover:bg-slate-50"
               >
                 <div
-                  class="grid size-12 place-items-center rounded-xl bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20"
+                  class="grid size-12 place-items-center rounded-xl bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20 light:text-emerald-600"
                 >
                   {idx === 0 && (
                     <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -195,8 +223,8 @@ const navItems = [
                     <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
                   )}
                 </div>
-                <h3 class="mt-5 text-lg font-semibold text-white">{item.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-400">{item.desc}</p>
+                <h3 class="mt-5 text-lg font-semibold text-white light:text-slate-900">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400 light:text-slate-600">{item.desc}</p>
               </article>
             ))}
           </div>
@@ -204,33 +232,33 @@ const navItems = [
       </section>
 
       <!-- ===================== LOCAL SERVICES / RENTAL ===================== -->
-      <section id="local" class="scroll-mt-20 border-t border-white/5 bg-slate-900/30 py-20 sm:py-28">
+      <section id="local" class="scroll-mt-20 border-t border-white/5 bg-slate-900/30 py-20 sm:py-28 light:border-slate-200 light:bg-slate-50">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl">
-            <p class="text-sm font-semibold uppercase tracking-widest text-sky-400">
+            <p class="text-sm font-semibold uppercase tracking-widest text-sky-400 light:text-sky-600">
               {t.local.eyebrow}
             </p>
-            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
               {t.local.title}
             </h2>
-            <p class="mt-4 text-lg text-slate-400">{t.local.lead}</p>
+            <p class="mt-4 text-lg text-slate-400 light:text-slate-600">{t.local.lead}</p>
           </div>
 
           <div class="mt-14 grid gap-6 md:grid-cols-2">
             <article
-              class="flex gap-5 rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition-colors hover:border-sky-400/40"
+              class="flex gap-5 rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition-colors hover:border-sky-400/40 light:border-slate-200 light:bg-white"
             >
               <div
-                class="grid size-12 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-400/20"
+                class="grid size-12 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-400/20 light:text-sky-600"
               >
                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-white">{t.local.carTitle}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-400">{t.local.carDesc}</p>
+                <h3 class="text-lg font-semibold text-white light:text-slate-900">{t.local.carTitle}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400 light:text-slate-600">{t.local.carDesc}</p>
                 <a
                   href={`tel:${company.phoneHref}`}
-                  class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-300 hover:text-sky-200"
+                  class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-300 hover:text-sky-200 light:text-sky-600 light:hover:text-sky-700"
                 >
                   {t.local.carCta}
                   <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -239,19 +267,19 @@ const navItems = [
             </article>
 
             <article
-              class="flex gap-5 rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition-colors hover:border-sky-400/40"
+              class="flex gap-5 rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition-colors hover:border-sky-400/40 light:border-slate-200 light:bg-white"
             >
               <div
-                class="grid size-12 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-400/20"
+                class="grid size-12 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-400/20 light:text-sky-600"
               >
                 <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="12" width="16" height="4" rx="1"/><path d="M4 12V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M6 20v-4"/><path d="M18 20v-4"/></svg>
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-white">{t.local.rentalTitle}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-400" set:html={t.local.rentalDescHtml} />
+                <h3 class="text-lg font-semibold text-white light:text-slate-900">{t.local.rentalTitle}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400 light:text-slate-600" set:html={t.local.rentalDescHtml} />
                 <a
                   href={anchors.contact}
-                  class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-300 hover:text-sky-200"
+                  class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-300 hover:text-sky-200 light:text-sky-600 light:hover:text-sky-700"
                 >
                   {t.local.rentalCta}
                   <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -263,131 +291,141 @@ const navItems = [
       </section>
 
       <!-- ===================== PRODUCTS ===================== -->
-      <section id="products" class="scroll-mt-20 border-t border-white/5 py-20 sm:py-28">
+      <section id="products" class="scroll-mt-20 border-t border-white/5 py-20 sm:py-28 light:border-slate-200">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl">
-            <p class="text-sm font-semibold uppercase tracking-widest text-amber-400">
+            <p class="text-sm font-semibold uppercase tracking-widest text-amber-400 light:text-amber-600">
               {t.products.eyebrow}
             </p>
-            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
               {t.products.title}
             </h2>
           </div>
 
-          <div class="mt-14 grid gap-8 lg:grid-cols-2 lg:items-center">
-            <div
-              class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950"
-            >
-              <div
-                class="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_45%,rgba(251,191,36,0.25),transparent_70%)]"
+          <div class="mt-14 grid gap-6 md:grid-cols-2">
+            {t.products.items.map((item, idx) => (
+              <article
+                class="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 p-7 transition-colors hover:border-amber-400/40 light:border-slate-200 light:bg-white"
               >
-              </div>
-              <div class="absolute inset-0 grid place-items-center">
-                <svg class="size-28 text-amber-300/90 drop-shadow-[0_0_40px_rgba(251,191,36,0.4)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.7 10.2 18 9 18 8a6 6 0 0 0-12 0c0 1 .3 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
-              </div>
-              <span
-                class="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-200"
-              >
-                <span class="size-1.5 rounded-full bg-amber-300"></span>
-                {t.products.badge}
-              </span>
-            </div>
-
-            <div>
-              <h3 class="text-2xl font-bold text-white">{t.products.itemTitle}</h3>
-              <p class="mt-4 text-slate-400" set:html={t.products.itemDescHtml} />
-              <ul class="mt-6 space-y-3 text-sm text-slate-300">
-                {t.products.features.map((feature) => (
-                  <li class="flex items-start gap-3">
-                    <svg class="mt-0.5 size-5 shrink-0 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <div class="mt-8">
-                <a
-                  href={anchors.contact}
-                  class="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-5 py-3 text-sm font-semibold text-amber-200 transition-colors hover:bg-amber-400/20"
+                <div
+                  class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_100%_0%,rgba(251,191,36,0.12),transparent_70%)]"
                 >
-                  {t.products.cta}
-                  <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-              </div>
-            </div>
+                </div>
+                <div class="flex items-center justify-between gap-4">
+                  <div
+                    class="grid size-12 place-items-center rounded-xl bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20 light:text-amber-600"
+                  >
+                    {idx === 0 ? (
+                      <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.7 10.2 18 9 18 8a6 6 0 0 0-12 0c0 1 .3 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    ) : (
+                      <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v8a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    )}
+                  </div>
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-200 light:text-amber-700"
+                  >
+                    <span class="size-1.5 rounded-full bg-amber-300"></span>
+                    {item.badge}
+                  </span>
+                </div>
+
+                <h3 class="mt-5 text-xl font-bold text-white light:text-slate-900">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400 light:text-slate-600" set:html={item.descHtml} />
+
+                <ul class="mt-5 space-y-2.5 text-sm text-slate-300 light:text-slate-700">
+                  {item.features.map((feature) => (
+                    <li class="flex items-start gap-3">
+                      <svg class="mt-0.5 size-5 shrink-0 text-amber-300 light:text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="mt-auto pt-6">
+                  <a
+                    href={anchors.contact}
+                    class="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-5 py-2.5 text-sm font-semibold text-amber-200 transition-colors hover:bg-amber-400/20 light:text-amber-700"
+                  >
+                    {item.cta}
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       <!-- ===================== CONTACT ===================== -->
-      <section id="contact" class="scroll-mt-20 border-t border-white/5 bg-slate-900/30 py-20 sm:py-28">
+      <section id="contact" class="scroll-mt-20 border-t border-white/5 bg-slate-900/30 py-20 sm:py-28 light:border-slate-200 light:bg-slate-50">
         <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-2">
             <div>
-              <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+              <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400 light:text-emerald-600">
                 {t.contact.eyebrow}
               </p>
-              <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
                 {t.contact.title}
               </h2>
-              <p class="mt-4 text-lg text-slate-400">{t.contact.lead}</p>
+              <p class="mt-4 text-lg text-slate-400 light:text-slate-600">{t.contact.lead}</p>
 
               <div class="mt-8 space-y-4">
                 <a
                   href={`mailto:${company.email}`}
-                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40"
+                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40 light:border-slate-200 light:bg-white"
                 >
-                  <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20">
+                  <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20 light:text-emerald-600">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </span>
                   <span>
                     <span class="block text-xs text-slate-500">{t.contact.emailLabel}</span>
-                    <span class="font-medium text-white">{company.email}</span>
+                    <span class="font-medium text-white light:text-slate-900">{company.email}</span>
                   </span>
                 </a>
 
                 <a
                   href={`tel:${company.phoneHref}`}
-                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40"
+                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40 light:border-slate-200 light:bg-white"
                 >
-                  <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20">
+                  <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20 light:text-emerald-600">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </span>
                   <span>
                     <span class="block text-xs text-slate-500">{t.contact.phoneLabel}</span>
-                    <span class="font-medium text-white">{company.phone}</span>
+                    <span class="font-medium text-white light:text-slate-900">{company.phone}</span>
                   </span>
                 </a>
               </div>
 
-              <div class="mt-8 rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+              <div class="mt-8 rounded-2xl border border-white/10 bg-slate-950/60 p-6 light:border-slate-200 light:bg-white">
                 <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-500">
                   {t.contact.registryHeading}
                 </h3>
                 <dl class="mt-4 space-y-2.5 text-sm">
                   <div class="flex justify-between gap-4">
                     <dt class="text-slate-500">{t.contact.fieldCompany}</dt>
-                    <dd class="text-right font-medium text-white">{company.name}</dd>
+                    <dd class="text-right font-medium text-white light:text-slate-900">{company.name}</dd>
                   </div>
                   <div class="flex justify-between gap-4">
                     <dt class="text-slate-500">{t.contact.fieldAddress}</dt>
-                    <dd class="text-right text-slate-200">{company.street}, {company.city}</dd>
+                    <dd class="text-right text-slate-200 light:text-slate-800">{company.street}, {company.city}</dd>
                   </div>
                   <div class="flex justify-between gap-4">
                     <dt class="text-slate-500">{t.contact.fieldNip}</dt>
-                    <dd class="text-right font-mono text-slate-200">{company.nip}</dd>
+                    <dd class="text-right font-mono text-slate-200 light:text-slate-800">{company.nip}</dd>
                   </div>
                   <div class="flex justify-between gap-4">
                     <dt class="text-slate-500">{t.contact.fieldRegon}</dt>
-                    <dd class="text-right font-mono text-slate-200">{company.regon}</dd>
+                    <dd class="text-right font-mono text-slate-200 light:text-slate-800">{company.regon}</dd>
                   </div>
                 </dl>
               </div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8">
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8 light:border-slate-200 light:bg-white">
               <form action={formAction} method={formMethod} class="space-y-5">
                 <div>
-                  <label for="name" class="mb-1.5 block text-sm font-medium text-slate-300">
+                  <label for="name" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
                     {t.contact.formName}
                   </label>
                   <input
@@ -397,12 +435,12 @@ const navItems = [
                     required
                     autocomplete="name"
                     placeholder={t.contact.formNamePlaceholder}
-                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20"
+                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label for="email" class="mb-1.5 block text-sm font-medium text-slate-300">
+                  <label for="email" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
                     {t.contact.formEmail}
                   </label>
                   <input
@@ -412,25 +450,25 @@ const navItems = [
                     required
                     autocomplete="email"
                     placeholder={t.contact.formEmailPlaceholder}
-                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20"
+                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
                   />
                 </div>
 
                 <div>
-                  <label for="topic" class="mb-1.5 block text-sm font-medium text-slate-300">
+                  <label for="topic" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
                     {t.contact.formTopic}
                   </label>
                   <select
                     id="topic"
                     name="topic"
-                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20"
+                    class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900"
                   >
                     {t.contact.topics.map((topic) => <option>{topic}</option>)}
                   </select>
                 </div>
 
                 <div>
-                  <label for="message" class="mb-1.5 block text-sm font-medium text-slate-300">
+                  <label for="message" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
                     {t.contact.formMessage}
                   </label>
                   <textarea
@@ -439,7 +477,7 @@ const navItems = [
                     rows="4"
                     required
                     placeholder={t.contact.formMessagePlaceholder}
-                    class="w-full resize-y rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20"
+                    class="w-full resize-y rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
                   ></textarea>
                 </div>
 
@@ -460,11 +498,11 @@ const navItems = [
     </main>
 
     <!-- ===================== FOOTER ===================== -->
-    <footer class="border-t border-white/5 bg-slate-950">
+    <footer class="border-t border-white/5 bg-slate-950 light:border-slate-200 light:bg-white">
       <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div class="max-w-sm">
-            <div class="flex items-center gap-2.5 font-semibold text-white">
+            <div class="flex items-center gap-2.5 font-semibold text-white light:text-slate-900">
               <span
                 class="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 text-slate-950"
               >
@@ -472,11 +510,11 @@ const navItems = [
               </span>
               {company.short}
             </div>
-            <p class="mt-4 text-sm leading-relaxed text-slate-500">{t.footer.tagline}</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-500 light:text-slate-600">{t.footer.tagline}</p>
           </div>
 
-          <div class="text-sm leading-relaxed text-slate-400">
-            <p class="font-medium text-slate-200">{company.name}</p>
+          <div class="text-sm leading-relaxed text-slate-400 light:text-slate-600">
+            <p class="font-medium text-slate-200 light:text-slate-900">{company.name}</p>
             <p class="mt-2">{company.street}</p>
             <p>{company.city}</p>
             <p class="mt-2">NIP: <span class="font-mono">{company.nip}</span></p>
@@ -485,12 +523,20 @@ const navItems = [
         </div>
 
         <div
-          class="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-slate-600 sm:flex-row"
+          class="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-slate-600 sm:flex-row light:border-slate-200 light:text-slate-500"
         >
           <p>© {year} {company.name}. {t.footer.rights}</p>
           <p>{t.footer.builtWith}</p>
         </div>
       </div>
     </footer>
+
+    {/* Theme toggle: persist the choice and flip the `.light` class. */}
+    <script is:inline>
+      document.getElementById("theme-toggle")?.addEventListener("click", () => {
+        const isLight = document.documentElement.classList.toggle("light");
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+      });
+    </script>
   </body>
 </html>
