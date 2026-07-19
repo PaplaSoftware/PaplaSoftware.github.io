@@ -1,0 +1,158 @@
+---
+import {
+  useTranslations,
+  company,
+  FORMSPREE_ENDPOINT,
+  type Lang,
+} from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// A static site has no backend: use Formspree if configured, else `mailto:`.
+const formAction = FORMSPREE_ENDPOINT || `mailto:${company.email}`;
+const formMethod = FORMSPREE_ENDPOINT ? "POST" : "GET";
+---
+
+<section id="contact" class="scroll-mt-20 border-t border-white/5 bg-slate-900/30 py-20 sm:py-28 light:border-slate-200 light:bg-slate-50">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400 light:text-emerald-600">
+          {t.contact.eyebrow}
+        </p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
+          {t.contact.title}
+        </h2>
+        <p class="mt-4 text-lg text-slate-400 light:text-slate-600">{t.contact.lead}</p>
+
+        <div class="mt-8 space-y-4">
+          <a
+            href={`mailto:${company.email}`}
+            class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40 light:border-slate-200 light:bg-white"
+          >
+            <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20 light:text-emerald-600">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+            <span>
+              <span class="block text-xs text-slate-500">{t.contact.emailLabel}</span>
+              <span class="font-medium text-white light:text-slate-900">{company.email}</span>
+            </span>
+          </a>
+
+          <a
+            href={`tel:${company.phoneHref}`}
+            class="flex items-center gap-4 rounded-xl border border-white/10 bg-slate-900/60 p-4 transition-colors hover:border-emerald-400/40 light:border-slate-200 light:bg-white"
+          >
+            <span class="grid size-11 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20 light:text-emerald-600">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <span>
+              <span class="block text-xs text-slate-500">{t.contact.phoneLabel}</span>
+              <span class="font-medium text-white light:text-slate-900">{company.phone}</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="mt-8 rounded-2xl border border-white/10 bg-slate-950/60 p-6 light:border-slate-200 light:bg-white">
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-500">
+            {t.contact.registryHeading}
+          </h3>
+          <dl class="mt-4 space-y-2.5 text-sm">
+            <div class="flex justify-between gap-4">
+              <dt class="text-slate-500">{t.contact.fieldCompany}</dt>
+              <dd class="text-right font-medium text-white light:text-slate-900">{company.name}</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-slate-500">{t.contact.fieldAddress}</dt>
+              <dd class="text-right text-slate-200 light:text-slate-800">{company.street}, {company.city}</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-slate-500">{t.contact.fieldNip}</dt>
+              <dd class="text-right font-mono text-slate-200 light:text-slate-800">{company.nip}</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-slate-500">{t.contact.fieldRegon}</dt>
+              <dd class="text-right font-mono text-slate-200 light:text-slate-800">{company.regon}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8 light:border-slate-200 light:bg-white">
+        <form action={formAction} method={formMethod} class="space-y-5">
+          <div>
+            <label for="name" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
+              {t.contact.formName}
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder={t.contact.formNamePlaceholder}
+              class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
+              {t.contact.formEmail}
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder={t.contact.formEmailPlaceholder}
+              class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
+            />
+          </div>
+
+          <div>
+            <label for="topic" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
+              {t.contact.formTopic}
+            </label>
+            <select
+              id="topic"
+              name="topic"
+              class="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900"
+            >
+              {t.contact.topics.map((topic) => <option>{topic}</option>)}
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="mb-1.5 block text-sm font-medium text-slate-300 light:text-slate-700">
+              {t.contact.formMessage}
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder={t.contact.formMessagePlaceholder}
+              class="w-full resize-y rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/20 light:border-slate-300 light:bg-white light:text-slate-900 light:placeholder-slate-400"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-colors hover:bg-emerald-300"
+          >
+            {t.contact.submit}
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+          </button>
+
+          <p class="text-center text-xs text-slate-500">{t.contact.consent}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

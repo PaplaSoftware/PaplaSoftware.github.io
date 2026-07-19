@@ -54,11 +54,20 @@ npm run preview
   - `FORMSPREE_ENDPOINT` — empty ⇒ contact form falls back to `mailto:`.
   - `anchors` — locale-independent section hrefs.
   - `useTranslations(lang)` helper.
-- `src/components/Landing.astro` — the ENTIRE page markup, one component, prop `lang`.
-  All text comes from `ui.ts`. Edit layout/design/Tailwind here. Maps over
-  `services.items` / `products.items` arrays, so N services/products just work.
+- `src/layouts/BaseLayout.astro` — document skeleton: `<html>/<head>/<body>`, meta,
+  fonts, hreflang, favicon, and the FOUC theme guard script. Prop `lang`; renders a
+  `<slot />`.
+- `src/components/*.astro` — one component PER SECTION (split, not a monolith):
+  `Header`, `ThemeToggle` (button + persist script), `Hero`, `Services`,
+  `LocalServices`, `Products`, `Contact`, `Footer`. Each takes a `lang` prop and pulls
+  its copy from `ui.ts` via `useTranslations(lang)`. `Services`/`Products` map over the
+  `*.items` arrays, so N items just work (section icons are chosen by index).
+- `src/components/Landing.astro` — thin COMPOSER: wraps the sections in `BaseLayout`
+  (`<Header/> <main id="top"> …sections… </main> <Footer/>`). No markup of its own.
 - `src/pages/index.astro` (PL, `/`) and `src/pages/en/index.astro` (EN, `/en/`) —
   thin wrappers: `<Landing lang="pl|en" />`.
+- **Where to edit what**: copy → `ui.ts`; a section's layout/design → that section's
+  component; page-wide `<head>`/scripts → `BaseLayout`; section order → `Landing.astro`.
 - `src/styles/global.css` — Tailwind import, `@custom-variant light`, `color-scheme`,
   Inter font token, and the button `cursor: pointer` fix.
 - `astro.config.mjs` — `site`/`base` for Pages + `i18n` (`defaultLocale: 'pl'`,
@@ -147,6 +156,10 @@ Source of truth = `company` in `src/i18n/ui.ts`.
 - 2026-07-19 — Bumped GitHub Actions to Node-24 majors (silences Node 20 deprecation
   warning): checkout@v7, setup-node@v7, upload-pages-artifact@v5, deploy-pages@v5.
   When bumping actions, verify tags exist first: `git ls-remote --tags <repo>`.
+- 2026-07-19 — Split the monolithic `Landing.astro` into `BaseLayout` + one component
+  per section (`Header`, `ThemeToggle`, `Hero`, `Services`, `LocalServices`,
+  `Products`, `Contact`, `Footer`); `Landing.astro` is now just the composer. Output
+  is byte-for-byte equivalent (pure refactor).
 - 2026-07-19 — Open TODOs: set `FORMSPREE_ENDPOINT`; delete stale remote `main` after
   confirming `master` is the default branch; optionally replace placeholder product
   visuals.

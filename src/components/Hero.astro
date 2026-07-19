@@ -1,0 +1,62 @@
+---
+import { useTranslations, anchors, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32">
+  {/* Background: radial glow + faint grid */}
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(16,185,129,0.14),transparent_70%)]"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(70%_60%_at_50%_0%,black,transparent)]"
+  >
+  </div>
+
+  <div class="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
+    <span
+      class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-300 light:border-slate-200 light:bg-slate-100 light:text-slate-600"
+    >
+      <span class="size-2 rounded-full bg-emerald-400 shadow-[0_0_10px] shadow-emerald-400"></span>
+      {t.hero.badge}
+    </span>
+
+    <h1
+      class="mx-auto mt-8 max-w-4xl text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl light:text-slate-900"
+    >
+      {t.hero.titleLead}{" "}
+      <span
+        class="bg-gradient-to-r from-emerald-300 via-teal-300 to-sky-400 bg-clip-text text-transparent light:from-emerald-500 light:via-teal-500 light:to-sky-600"
+      >
+        {t.hero.titleHighlight}
+      </span>
+    </h1>
+
+    <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-slate-400 light:text-slate-600">
+      {t.hero.lead}
+    </p>
+
+    <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a
+        href={anchors.services}
+        class="inline-flex items-center gap-2 rounded-xl bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-transform hover:-translate-y-0.5 hover:bg-emerald-300"
+      >
+        {t.hero.ctaPrimary}
+        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a
+        href={anchors.contact}
+        class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 light:border-slate-200 light:bg-slate-100 light:text-slate-900 light:hover:bg-slate-200"
+      >
+        {t.hero.ctaSecondary}
+      </a>
+    </div>
+  </div>
+</section>
