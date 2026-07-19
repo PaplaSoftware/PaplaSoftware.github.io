@@ -1,0 +1,69 @@
+---
+import { useTranslations, marketplaces, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="printing" class="scroll-mt-20 border-t border-white/5 py-20 sm:py-28 light:border-slate-200">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-violet-400 light:text-violet-600">
+          {t.printing.eyebrow}
+        </p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl light:text-slate-900">
+          {t.printing.title}
+        </h2>
+        <p class="mt-4 text-lg text-slate-400 light:text-slate-600">{t.printing.lead}</p>
+
+        <ul class="mt-6 space-y-3 text-sm text-slate-300 light:text-slate-700">
+          {t.printing.features.map((feature) => (
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 size-5 shrink-0 text-violet-300 light:text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={marketplaces.allegro}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-colors hover:bg-violet-400"
+          >
+            {t.printing.ctaAllegro}
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+          <a
+            href={marketplaces.olx}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-400/30 bg-violet-400/10 px-5 py-3 text-sm font-semibold text-violet-200 transition-colors hover:bg-violet-400/20 light:text-violet-700"
+          >
+            {t.printing.ctaOlx}
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      {/* Decorative panel */}
+      <div
+        class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-500/10 via-slate-900 to-slate-950 light:border-slate-200 light:from-violet-500/10 light:via-white light:to-slate-50"
+      >
+        <div
+          class="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_45%,rgba(139,92,246,0.22),transparent_70%)]"
+        >
+        </div>
+        <div class="absolute inset-0 grid place-items-center">
+          <svg class="size-28 text-violet-300/90 drop-shadow-[0_0_40px_rgba(139,92,246,0.4)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h12"/><path d="M6 14h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2z"/><path d="M8 18v3h8v-3"/><path d="M8 5V3h8v2"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

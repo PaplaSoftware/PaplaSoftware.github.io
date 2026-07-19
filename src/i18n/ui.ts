@@ -28,10 +28,17 @@ export const company = {
 // otherwise the form falls back to a `mailto:` link.
 export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqrover';
 
+// Owner's marketplace shop profiles (public).
+export const marketplaces = {
+  allegro: 'https://allegro.pl/uzytkownik/PaplaSoftware',
+  olx: 'https://www.olx.pl/oferty/uzytkownik/2LFR49',
+} as const;
+
 // Section anchors are locale-independent and shared across languages.
 export const anchors = {
   services: '#services',
   local: '#local',
+  printing: '#printing',
   products: '#products',
   contact: '#contact',
 } as const;
@@ -48,6 +55,7 @@ const pl = {
   nav: {
     services: 'Usługi B2B',
     local: 'Usługi lokalne',
+    printing: 'Druk 3D',
     products: 'Produkty',
     contact: 'Kontakt',
     cta: 'Napisz do mnie',
@@ -91,6 +99,18 @@ const pl = {
     rentalDescHtml:
       'Sprzęt do wynajęcia, m.in. <span class="text-slate-200 light:text-slate-800">agregat malarski</span> — idealny do jednorazowych remontów bez inwestowania we własne urządzenie. Elastyczne okresy najmu.',
     rentalCta: 'Zapytaj o dostępność',
+  },
+  printing: {
+    eyebrow: 'Druk 3D',
+    title: 'Druk 3D na zamówienie',
+    lead: 'Projektuję i drukuję elementy na zamówienie — personalizowane gadżety, organizery, uchwyty, ozdoby i części zamienne. Gotowe wzory kupisz od ręki na Allegro i OLX.',
+    features: [
+      'Personalizacja: imię, logo, kolor, wymiar',
+      'Szybka realizacja i wysyłka (paczkomat)',
+      'Od pojedynczych sztuk po małe serie',
+    ],
+    ctaAllegro: 'Zobacz na Allegro',
+    ctaOlx: 'Zobacz na OLX',
   },
   products: {
     eyebrow: 'Produkty własne',
@@ -174,6 +194,7 @@ const en: typeof pl = {
   nav: {
     services: 'B2B services',
     local: 'Local services',
+    printing: '3D printing',
     products: 'Products',
     contact: 'Contact',
     cta: 'Get in touch',
@@ -217,6 +238,18 @@ const en: typeof pl = {
     rentalDescHtml:
       'Equipment to rent, e.g. a <span class="text-slate-200 light:text-slate-800">paint sprayer</span> — ideal for one-off renovations without buying your own unit. Flexible rental periods.',
     rentalCta: 'Ask about availability',
+  },
+  printing: {
+    eyebrow: '3D printing',
+    title: 'Custom 3D printing',
+    lead: 'I design and print made-to-order parts — personalized gadgets, organizers, holders, decorations and spare parts. Ready-made designs are available now on Allegro and OLX.',
+    features: [
+      'Personalization: name, logo, color, size',
+      'Fast turnaround and shipping',
+      'From single pieces to small batches',
+    ],
+    ctaAllegro: 'See on Allegro',
+    ctaOlx: 'See on OLX',
   },
   products: {
     eyebrow: 'Own products',
