@@ -22,6 +22,15 @@ html.light {
   color-scheme: light;
 }
 
+/*
+ * Tailwind v4's Preflight sets `cursor: default` on <button>. Restore the
+ * pointer so interactive buttons (theme toggle, form submit) feel clickable.
+ */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
