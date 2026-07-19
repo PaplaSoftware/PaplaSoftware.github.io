@@ -28,12 +28,6 @@ export const company = {
 // otherwise the form falls back to a `mailto:` link.
 export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqrover';
 
-// Owner's marketplace shop profiles (public).
-export const marketplaces = {
-  allegro: 'https://allegro.pl/uzytkownik/PaplaSoftware',
-  olx: 'https://www.olx.pl/oferty/uzytkownik/2LFR49',
-} as const;
-
 // Section anchors are locale-independent and shared across languages.
 export const anchors = {
   services: '#services',
@@ -103,14 +97,13 @@ const pl = {
   printing: {
     eyebrow: 'Druk 3D',
     title: 'Druk 3D na zamówienie',
-    lead: 'Projektuję i drukuję elementy na zamówienie — personalizowane gadżety, organizery, uchwyty, ozdoby i części zamienne. Gotowe wzory kupisz od ręki na Allegro i OLX.',
+    lead: 'Projektuję i drukuję elementy na zamówienie — personalizowane gadżety, organizery, uchwyty, ozdoby i części zamienne. Wyślę wycenę na podstawie Twojego projektu lub pomysłu.',
     features: [
       'Personalizacja: imię, logo, kolor, wymiar',
       'Szybka realizacja i wysyłka (paczkomat)',
       'Od pojedynczych sztuk po małe serie',
     ],
-    ctaAllegro: 'Zobacz na Allegro',
-    ctaOlx: 'Zobacz na OLX',
+    cta: 'Zapytaj o wycenę',
   },
   products: {
     eyebrow: 'Produkty własne',
@@ -242,14 +235,13 @@ const en: typeof pl = {
   printing: {
     eyebrow: '3D printing',
     title: 'Custom 3D printing',
-    lead: 'I design and print made-to-order parts — personalized gadgets, organizers, holders, decorations and spare parts. Ready-made designs are available now on Allegro and OLX.',
+    lead: "I design and print made-to-order parts — personalized gadgets, organizers, holders, decorations and spare parts. Send me your design or idea and I'll quote it.",
     features: [
       'Personalization: name, logo, color, size',
       'Fast turnaround and shipping',
       'From single pieces to small batches',
     ],
-    ctaAllegro: 'See on Allegro',
-    ctaOlx: 'See on OLX',
+    cta: 'Ask for a quote',
   },
   products: {
     eyebrow: 'Own products',

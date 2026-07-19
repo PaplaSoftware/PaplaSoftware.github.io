@@ -1,5 +1,5 @@
 ---
-import { useTranslations, marketplaces, type Lang } from "../i18n/ui";
+import { useTranslations, anchors, type Lang } from "../i18n/ui";
 
 interface Props {
   lang: Lang;
@@ -30,24 +30,13 @@ const t = useTranslations(lang);
           ))}
         </ul>
 
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <div class="mt-8">
           <a
-            href={marketplaces.allegro}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-colors hover:bg-violet-400"
+            href={anchors.contact}
+            class="inline-flex items-center gap-2 rounded-xl bg-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-colors hover:bg-violet-400"
           >
-            {t.printing.ctaAllegro}
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-          </a>
-          <a
-            href={marketplaces.olx}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-400/30 bg-violet-400/10 px-5 py-3 text-sm font-semibold text-violet-200 transition-colors hover:bg-violet-400/20 light:text-violet-700"
-          >
-            {t.printing.ctaOlx}
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            {t.printing.cta}
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>
       </div>

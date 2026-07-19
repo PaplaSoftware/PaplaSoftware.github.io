@@ -61,8 +61,8 @@ npm run preview
   `Header`, `ThemeToggle` (button + persist script), `Hero`, `Services`,
   `LocalServices`, `Printing`, `Products`, `Contact`, `Footer`. Each section owns an
   accent colour (services=emerald, local=sky, printing=violet, products=amber).
-  `Printing` links to the owner's marketplace shops (`marketplaces` in `ui.ts`:
-  Allegro + OLX). Each takes a `lang` prop and pulls
+  `Printing` CTA points to the contact form (do NOT link Allegro/OLX from the printing
+  section — owner's explicit request). Each takes a `lang` prop and pulls
   its copy from `ui.ts` via `useTranslations(lang)`. `Services`/`Products` map over the
   `*.items` arrays, so N items just work (section icons are chosen by index).
 - `src/components/Landing.astro` — thin COMPOSER: wraps the sections in `BaseLayout`
@@ -165,9 +165,10 @@ Source of truth = `company` in `src/i18n/ui.ts`.
   is byte-for-byte equivalent (pure refactor).
 - 2026-07-19 — Added `TODO.md` (roadmap/backlog). Consult + update it when planning or
   finishing features.
-- 2026-07-19 — Added a "Druk 3D / 3D printing" section (`Printing.astro`, violet accent)
-  with CTAs to the owner's Allegro + OLX shops (`marketplaces` in `ui.ts`). Wired
-  Formspree + AJAX contact submit (inline status, no redirect).
+- 2026-07-19 — Added a "Druk 3D / 3D printing" section (`Printing.astro`, violet accent);
+  CTA goes to the contact form. NOTE: owner asked NOT to link Allegro/OLX from the
+  printing section, so the `marketplaces` export was removed. Wired Formspree + AJAX
+  contact submit (inline status, no redirect).
 - 2026-07-19 — Open TODOs: see `TODO.md`. Highlights: set `FORMSPREE_ENDPOINT` (form is
   `mailto:` fallback only); make `master` the default branch then delete stale remote
   `main`; optionally replace placeholder product visuals.
