@@ -144,6 +144,9 @@ Source of truth = `company` in `src/i18n/ui.ts`.
   ogrodu / 3D garden planner" (web app, Coming Soon); added light/dark theme toggle.
 - 2026-07-19 — Pages fixes: removed README, added `.nojekyll`; CI Node 20 → 22;
   default/deploy branch `main` → `master`; restored button `cursor: pointer`.
+- 2026-07-19 — Bumped GitHub Actions to Node-24 majors (silences Node 20 deprecation
+  warning): checkout@v7, setup-node@v7, upload-pages-artifact@v5, deploy-pages@v5.
+  When bumping actions, verify tags exist first: `git ls-remote --tags <repo>`.
 - 2026-07-19 — Open TODOs: set `FORMSPREE_ENDPOINT`; delete stale remote `main` after
   confirming `master` is the default branch; optionally replace placeholder product
   visuals.
