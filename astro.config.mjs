@@ -18,6 +18,15 @@ export default defineConfig({
 
   trailingSlash: 'ignore',
 
+  // Default locale (Polish) is served at `/`; English lives under `/en/`.
+  i18n: {
+    defaultLocale: 'pl',
+    locales: ['pl', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
