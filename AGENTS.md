@@ -160,6 +160,8 @@ Source of truth = `company` in `src/i18n/ui.ts`.
   per section (`Header`, `ThemeToggle`, `Hero`, `Services`, `LocalServices`,
   `Products`, `Contact`, `Footer`); `Landing.astro` is now just the composer. Output
   is byte-for-byte equivalent (pure refactor).
-- 2026-07-19 — Open TODOs: set `FORMSPREE_ENDPOINT`; delete stale remote `main` after
-  confirming `master` is the default branch; optionally replace placeholder product
-  visuals.
+- 2026-07-19 — Added `TODO.md` (roadmap/backlog). Consult + update it when planning or
+  finishing features.
+- 2026-07-19 — Open TODOs: see `TODO.md`. Highlights: set `FORMSPREE_ENDPOINT` (form is
+  `mailto:` fallback only); make `master` the default branch then delete stale remote
+  `main`; optionally replace placeholder product visuals.
