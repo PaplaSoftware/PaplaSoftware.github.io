@@ -84,7 +84,7 @@ const formMethod = FORMSPREE_ENDPOINT ? "POST" : "GET";
       </div>
 
       <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8 light:border-slate-200 light:bg-white">
-        <form action={formAction} method={formMethod} class="space-y-5">
+        <form id="contact-form" action={formAction} method={formMethod} class="space-y-5">
           {/* Formspree: email subject + honeypot spam trap (bots fill it, humans don't) */}
           <input type="hidden" name="_subject" value="Nowa wiadomość z paplasoftware.github.io" />
           <input
@@ -161,8 +161,64 @@ const formMethod = FORMSPREE_ENDPOINT ? "POST" : "GET";
           </button>
 
           <p class="text-center text-xs text-slate-500">{t.contact.consent}</p>
+
+          {/* Submission status (filled in by the inline script below) */}
+          <p
+            id="form-status"
+            role="status"
+            aria-live="polite"
+            class="hidden text-center text-sm"
+            data-success={t.contact.formSuccess}
+            data-error={t.contact.formError}
+          >
+          </p>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+{/*
+  Submit the form in the background so the visitor stays on the page — no redirect
+  to Formspree's thank-you page. Only intercept real HTTP endpoints; if the action
+  is a `mailto:` fallback, let the browser handle it normally.
+*/}
+<script is:inline>
+  (() => {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+    if (!form || !status) return;
+    if (form.action.startsWith("mailto:")) return;
+
+    const show = (msg, ok) => {
+      status.textContent = msg;
+      status.className =
+        "text-center text-sm " +
+        (ok ? "text-emerald-400 light:text-emerald-600" : "text-red-400 light:text-red-600");
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.classList.add("hidden");
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          form.reset();
+          show(status.dataset.success, true);
+        } else {
+          show(status.dataset.error, false);
+        }
+      } catch {
+        show(status.dataset.error, false);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
+  })();
+</script>

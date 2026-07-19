@@ -151,6 +151,8 @@ const pl = {
     ],
     submit: 'Wyślij wiadomość',
     consent: 'Wysyłając formularz akceptujesz kontakt zwrotny w sprawie zapytania.',
+    formSuccess: 'Dziękuję! Wiadomość została wysłana — odezwę się wkrótce.',
+    formError: 'Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na e-mail.',
   },
   footer: {
     tagline:
@@ -275,6 +277,8 @@ const en: typeof pl = {
     ],
     submit: 'Send message',
     consent: 'By submitting the form you agree to be contacted about your enquiry.',
+    formSuccess: 'Thank you! Your message has been sent — I will get back to you soon.',
+    formError: 'Something went wrong. Please try again or email me directly.',
   },
   footer: {
     tagline:
