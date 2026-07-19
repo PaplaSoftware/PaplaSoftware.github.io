@@ -47,7 +47,8 @@ the project is structured.
 - [ ] **Sell products (lamps):** Stripe Payment Links / Gumroad / Payhip "buy" buttons —
       checkout handled by the external service. — STATIC-OK
 - [x] **3D printing section** (`Printing.astro`), CTA to contact form.
-      NOTE: owner asked NOT to link Allegro/OLX from the printing section. — STATIC-OK
+- [x] **Allegro + OLX links** in the footer (informational). NOTE: keep them out of the
+      3D-printing section (owner request). — STATIC-OK
 - [ ] **Product catalog** as an Astro content collection (edit data files, rebuild). — STATIC-OK
 - [ ] **Service booking / scheduling:** embed Cal.com or Calendly. — STATIC-OK
 - [ ] **Newsletter capture:** Buttondown / Mailchimp embed. — STATIC-OK

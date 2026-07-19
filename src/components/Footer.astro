@@ -1,5 +1,5 @@
 ---
-import { useTranslations, company, type Lang } from "../i18n/ui";
+import { useTranslations, company, marketplaces, type Lang } from "../i18n/ui";
 
 interface Props {
   lang: Lang;
@@ -23,6 +23,28 @@ const year = new Date().getFullYear();
           {company.short}
         </div>
         <p class="mt-4 text-sm leading-relaxed text-slate-500 light:text-slate-600">{t.footer.tagline}</p>
+
+        <div class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          <span class="text-slate-500">{t.footer.findMe}:</span>
+          <a
+            href={marketplaces.allegro}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 font-medium text-slate-300 transition-colors hover:text-white light:text-slate-700 light:hover:text-slate-900"
+          >
+            Allegro
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+          <a
+            href={marketplaces.olx}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 font-medium text-slate-300 transition-colors hover:text-white light:text-slate-700 light:hover:text-slate-900"
+          >
+            OLX
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
       </div>
 
       <div class="text-sm leading-relaxed text-slate-400 light:text-slate-600">

@@ -28,6 +28,13 @@ export const company = {
 // otherwise the form falls back to a `mailto:` link.
 export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqrover';
 
+// Owner's marketplace shop profiles (public). Linked informationally in the FOOTER
+// only — do NOT attach these to the 3D-printing section (owner's explicit request).
+export const marketplaces = {
+  allegro: 'https://allegro.pl/uzytkownik/PaplaSoftware',
+  olx: 'https://www.olx.pl/oferty/uzytkownik/2LFR49',
+} as const;
+
 // Section anchors are locale-independent and shared across languages.
 export const anchors = {
   services: '#services',
@@ -172,6 +179,7 @@ const pl = {
       'Technologia i niezawodność — usługi dla biznesu i klientów indywidualnych. Software, usługi lokalne i produkty własne.',
     rights: 'Wszelkie prawa zastrzeżone.',
     builtWith: 'Zbudowano w Astro + Tailwind CSS.',
+    findMe: 'Znajdziesz mnie na',
   },
 };
 
@@ -310,6 +318,7 @@ const en: typeof pl = {
       'Technology and reliability — services for business and individual clients. Software, local services and own products.',
     rights: 'All rights reserved.',
     builtWith: 'Built with Astro + Tailwind CSS.',
+    findMe: 'Find me on',
   },
 };
 
