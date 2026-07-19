@@ -60,12 +60,10 @@ npm run preview
 - `src/components/*.astro` — one component PER SECTION (split, not a monolith):
   `Header`, `ThemeToggle` (button + persist script), `Hero`, `Services`,
   `LocalServices`, `Printing`, `Products`, `Contact`, `Footer`. Each section owns an
-  accent colour (services=emerald, local=sky, printing=violet, products=amber).
-  Allegro/OLX shop links (`marketplaces` in `ui.ts`) live in the FOOTER as
-  informational links only — the owner explicitly does NOT want them attached to the
-  3D-printing section (its CTA goes to the contact form). Each takes a `lang` prop and pulls
-  its copy from `ui.ts` via `useTranslations(lang)`. `Services`/`Products` map over the
-  `*.items` arrays, so N items just work (section icons are chosen by index).
+  accent colour (services=emerald, local=sky, printing=violet, products=amber). Each
+  takes a `lang` prop and pulls its copy from `ui.ts` via `useTranslations(lang)`.
+  `Services`/`Products` map over the `*.items` arrays, so N items just work (section
+  icons are chosen by index).
 - `src/components/Landing.astro` — thin COMPOSER: wraps the sections in `BaseLayout`
   (`<Header/> <main id="top"> …sections… </main> <Footer/>`). No markup of its own.
 - `src/pages/index.astro` (PL, `/`) and `src/pages/en/index.astro` (EN, `/en/`) —
@@ -166,10 +164,8 @@ Source of truth = `company` in `src/i18n/ui.ts`.
   is byte-for-byte equivalent (pure refactor).
 - 2026-07-19 — Added `TODO.md` (roadmap/backlog). Consult + update it when planning or
   finishing features.
-- 2026-07-19 — Added a "Druk 3D / 3D printing" section (`Printing.astro`, violet accent);
-  CTA goes to the contact form. Allegro/OLX links (`marketplaces` in `ui.ts`) placed in
-  the FOOTER as informational links — NOT attached to the printing section (owner req).
-  Wired Formspree + AJAX contact submit (inline status, no redirect).
-- 2026-07-19 — Open TODOs: see `TODO.md`. Highlights: set `FORMSPREE_ENDPOINT` (form is
-  `mailto:` fallback only); make `master` the default branch then delete stale remote
-  `main`; optionally replace placeholder product visuals.
+- 2026-07-19 — Wired Formspree contact form (AJAX submit, inline status, no redirect);
+  added a "Druk 3D / 3D printing" section (`Printing.astro`); Allegro/OLX links in the
+  footer (`marketplaces` in `ui.ts`).
+- 2026-07-19 — Open TODOs: see `TODO.md`. Highlights: make `master` the default branch
+  then delete stale remote `main`; optionally replace placeholder product visuals.
