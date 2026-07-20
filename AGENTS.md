@@ -7,12 +7,13 @@ agent should be able to act correctly from THIS FILE ALONE, with no re-explanati
 
 ## 0. SELF-UPDATE PROTOCOL (read + obey first)
 
-- After ANY non-trivial change, UPDATE this file in the same commit: sections
-  `Architecture`, `Conventions`, `Gotchas`, and especially `## STATE / HISTORY`.
-- Append a dated bullet to `## STATE / HISTORY` describing what changed and why.
+- After a non-trivial change, UPDATE this file in the same commit where a fact here
+  became stale (`Architecture`, `Conventions`, `Gotchas`, config).
 - If you introduce a new pattern/decision, record it here so it becomes the norm.
-- Keep it dense and current. This file is the memory; the user should never have to
-  re-explain prior work.
+- Keep it dense and CURRENT — describe how things ARE, not what changed. This is the
+  living state, not a changelog (git log is the changelog).
+- **Public repo** — never commit secrets (tokens, private keys, `.env`). The git
+  identity email and the registered company data are already public by design.
 - **Public repo** — never commit secrets (tokens, private keys, `.env`). The git
   identity email and the registered company data are already public by design.
 
@@ -144,28 +145,7 @@ Source of truth = `company` in `src/i18n/ui.ts`.
   intentionally different from the registered address (Szczyrk). Do not "fix" it to
   match the address.
 
-## STATE / HISTORY (append dated bullets)
+## 11. OPEN ITEMS
 
-- 2026-07-19 — Initial build: Astro 7 + Tailwind v4 scaffold; sections Hero / B2B
-  services / local services + rental / products / contact + footer with registry data.
-- 2026-07-19 — Added i18n (PL default at `/`, EN at `/en/`); extracted shared
-  `Landing.astro`; dictionaries in `ui.ts` (`en` typed against `pl`).
-- 2026-07-19 — Contact set to paplasoftware@gmail.com / +48 17 779 62 27; local
-  services relocated Szczyrk → Sędziszów Małopolski; added 2nd product "Planer 3D
-  ogrodu / 3D garden planner" (web app, Coming Soon); added light/dark theme toggle.
-- 2026-07-19 — Pages fixes: removed README, added `.nojekyll`; CI Node 20 → 22;
-  default/deploy branch `main` → `master`; restored button `cursor: pointer`.
-- 2026-07-19 — Bumped GitHub Actions to Node-24 majors (silences Node 20 deprecation
-  warning): checkout@v7, setup-node@v7, upload-pages-artifact@v5, deploy-pages@v5.
-  When bumping actions, verify tags exist first: `git ls-remote --tags <repo>`.
-- 2026-07-19 — Split the monolithic `Landing.astro` into `BaseLayout` + one component
-  per section (`Header`, `ThemeToggle`, `Hero`, `Services`, `LocalServices`,
-  `Products`, `Contact`, `Footer`); `Landing.astro` is now just the composer. Output
-  is byte-for-byte equivalent (pure refactor).
-- 2026-07-19 — Added `TODO.md` (roadmap/backlog). Consult + update it when planning or
-  finishing features.
-- 2026-07-19 — Wired Formspree contact form (AJAX submit, inline status, no redirect);
-  added a "Druk 3D / 3D printing" section (`Printing.astro`); Allegro/OLX links in the
-  footer (`marketplaces` in `ui.ts`).
-- 2026-07-19 — Open TODOs: see `TODO.md`. Highlights: make `master` the default branch
-  then delete stale remote `main`; optionally replace placeholder product visuals.
+See `TODO.md` for the roadmap. Operational leftovers: make `master` the default branch
+on GitHub, then delete the stale remote `main`.
